@@ -1,0 +1,13 @@
+<div class="slack-preview flex gap-3 max-w-[650px] h-[260px]">
+  <div class="bg-[#e8e8e8] rounded-lg w-1 shrink-0">
+  </div>
+  <div class="flex flex-col">
+    <div class="flex items-center gap-x-2">
+      <img class="size-4 rounded" [src]="metadata.favUrl" [alt]="metadata.title" appImgFallback/>
+      <span class="text-[#717274] text-[15px] overflow-hidden break-words" >{{metadata.url}}</span>
+    </div>
+    <span class="text-[#0576b9] ligatures font-bold text-[15px] break-words">{{metadata.title}}</span>
+    <span class="text-[#2c2d30] text-[15px] break-words">{{metadata.description}}</span>
+    <img class="preview-img max-w-[360px] h-[189px] bg-cover rounded" [src]="metadata.imgUrl"  [alt]="metadata.title" appImgFallback/>
+  </div>
+</div>

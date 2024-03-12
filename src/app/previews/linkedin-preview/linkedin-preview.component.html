@@ -1,0 +1,9 @@
+<div class="cursor-pointer linkedin-preview w-[552px]">
+  <div>
+    <img [src]="metadata.imgUrl"  [alt]="metadata.title" appImgFallback/>
+  </div>
+  <div class="flex flex-col px-4 py-2.5 bg-[#f2f3f5]">
+    <span class="text-[14px] text-[#000000e6] font-semibold max-h-10">{{metadata.title}}</span>
+    <span class="text-[#00000099] font-normal max-h-[16px] overflow-hidden text-[12px]">{{metadata.url}}</span>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.pinterest-preview {
+  font: normal normal 400 normal 12px/normal Helvetica Neue,Helvetica,ヒラギノ角ゴ Pro W3,Hiragino Kaku Gothic Pro,メイリオ,Meiryo,ＭＳ Ｐゴシック,arial,sans-serif;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 1.5px;
+  background: #8e8e8e;
+  margin-left: 2px;
+}

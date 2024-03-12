@@ -1,0 +1,10 @@
+<div class="cursor-pointer facebook-preview w-[500px] border-[#dadde1] border-2">
+  <div>
+    <img [src]="metadata.imgUrl" [alt]="metadata.title" appImgFallback/>
+  </div>
+  <div class="flex flex-col p-2.5 bg-[#f2f3f5]">
+    <span class="uppercase text-[#606770] overflow-hidden text-[12px]">{{metadata.url}}</span>
+    <span class="text-[16px] text-[#1d2129] font-semibold">{{metadata.title}}</span>
+    <span class="text-[#606770] overflow-hidden text-ellipsis break-words text-[14px] max-h-12 line-clamp-1 leading-5	">{{metadata.description}}</span>
+  </div>
+</div>
