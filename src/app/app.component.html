@@ -1,0 +1,172 @@
+<nz-layout>
+  <nz-layout>
+    <nz-content class="">
+      <div class="flex flex-col items-center justify-center my-20">
+
+        <div class="flex justify-center flex-col items-center">
+          <h1 class="text-5xl font-bold my-4">Meta / OG Tags Generator</h1>
+          <nz-page-header-subtitle>Effortlessly Generate and preview Meta Tags for Optimal Web Visibility</nz-page-header-subtitle>
+        </div>
+        <div class="flex justify-center items-center gap-10 my-14">
+          <div class="w-[400px]">
+            <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+              <input (keydown.enter)="getWebsiteMetatags()" #websiteInput type="text" placeholder="ex: google.com" nz-input [(ngModel)]="inputUrl" />
+            </nz-input-group>
+            <ng-template #addOnBeforeTemplate>
+              <nz-select [(ngModel)]="websiteProtocol">
+                <nz-option nzLabel="http://" nzValue="http://"></nz-option>
+                <nz-option nzLabel="https://" nzValue="https://"></nz-option>
+              </nz-select>
+            </ng-template>
+          </div>
+          <button nz-button (click)="getWebsiteMetatags()" [disabled]="loading || websiteInput.value.length === 0" nzType="primary">Website Metatags</button>
+        </div>
+          <nz-spin @an *ngIf="loading" nzSimple [nzSize]="'large'"></nz-spin>
+        <div class="flex justify-center gap-10">
+          <div class="bg-white p-3 forms w-96">
+            <nz-divider nzDashed [nzText]="formTitle">
+              <ng-template #formTitle>
+                <div class="text-[18px] font-bold">
+                  <i class='bx bx-code-alt' ></i>
+                  Generate Meta / Og Tags
+                </div>
+              </ng-template>
+            </nz-divider>
+
+            <form nz-form [formGroup]="metadataForm" nzLayout="vertical" (ngSubmit)="generateMetatags()">
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Title</nz-form-label>
+                <nz-form-control [nzSpan]="12" [nzMd]="24" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="titleErrorTpl">
+                  <input nz-input formControlName="title" placeholder="Website title" />
+                  <ng-template #titleErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">Title is required</ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="7" >Author</nz-form-label>
+                <nz-form-control [nzSpan]="12" [nzMd]="24"  nzHasFeedback>
+                  <input nz-input formControlName="author" placeholder="Website Author" />
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="7" >Keywords</nz-form-label>
+                <nz-form-control [nzSpan]="12" [nzMd]="24"  nzHasFeedback>
+                  <input nz-input formControlName="keywords" placeholder="Enter keywords separated by comma (,)"/>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="7" >Url</nz-form-label>
+                <nz-form-control [nzSpan]="12" [nzMd]="24"  nzHasFeedback >
+                  <input nz-input formControlName="url" placeholder="Website URL" />
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="7" >Image Url</nz-form-label>
+                <nz-form-control [nzSpan]="12" [nzMd]="24"  nzHasFeedback>
+                  <input nz-input formControlName="imgUrl" placeholder="Website image URL" />
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
+                <nz-form-control [nzSpan]="12" [nzMd]="24"  nzHasFeedback nzErrorTip="Description required">
+                  <nz-textarea-count [nzMaxCharacterCount]="200">
+                    <textarea formControlName="description" nz-input rows="2" placeholder="Write webpage description..."></textarea>
+                  </nz-textarea-count>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="5" [nzMd]="24">Allow search engines to index your website</nz-form-label>
+                <nz-form-control [nzSpan]="12" [nzMd]="24" nzHasFeedback>
+                  <nz-select formControlName="allowRobots" >
+                    <nz-option [nzValue]="'Yes'" [nzLabel]="'Yes'"></nz-option>
+                    <nz-option [nzValue]="'No'" [nzLabel]="'No'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="5">Language</nz-form-label>
+                <nz-form-control [nzSpan]="12" [nzMd]="24" nzHasFeedback>
+                  <nz-select formControlName="language" >
+                    <nz-option *ngFor="let lang of Object.values(Language)" [nzValue]="lang" [nzLabel]="lang"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+
+              <div class="flex justify-between">
+                <button nz-button nzType="primary" [disabled]="!metadataForm.valid">Generate Tags</button>
+                <button nz-button nzType="default" (click)="resetForm()" >Reset</button>
+              </div>
+
+            </form>
+          </div>
+          <div class="bg-white p-3 previews">
+            <nz-divider nzDashed [nzText]="previewTitle">
+              <ng-template #previewTitle>
+                <div class="text-[18px]  font-bold">
+                  <i class='bx bx-play-circle' ></i>
+                  Preview
+                </div>
+              </ng-template>
+            </nz-divider>
+
+            <nz-tabset [nzSize]="'large'">
+
+              <nz-tab [nzTitle]="titleTemplate" *ngFor="let network of networks" >
+                <ng-template #titleTemplate>
+                  <i class='bx' [ngClass]="network.icon"></i>
+                  {{network.name}}
+                </ng-template>
+
+                <div class="flex justify-center items-center mt-10">
+                  <ng-container [ngSwitch]="network.key">
+                    <app-facebook-preview *ngSwitchCase="'facebook'" [metadata]="metadata"></app-facebook-preview>
+                    <app-pinterest-preview *ngSwitchCase="'pinterest'" [metadata]="metadata" ></app-pinterest-preview>
+                    <div *ngSwitchCase="'x'" class="flex flex-col gap-10 justify-center items-center">
+                      <app-xv2-preview [metadata]="metadata"></app-xv2-preview>
+                      <app-x-preview [metadata]="metadata"></app-x-preview>
+                    </div>
+                    <app-slack-preview *ngSwitchCase="'slack'" [metadata]="metadata"></app-slack-preview>
+                    <app-discord-preview *ngSwitchCase="'discord'" [metadata]="metadata"></app-discord-preview>
+                    <app-google-preview *ngSwitchCase="'google'" [metadata]="metadata"></app-google-preview>
+                    <app-linkedin-preview *ngSwitchCase="'linkedin'" [metadata]="metadata"></app-linkedin-preview>
+                  </ng-container>
+                </div>
+
+              </nz-tab>
+
+            </nz-tabset>
+            <div class="flex flex-col gap-4 m-4">
+            </div>
+          </div>
+        </div>
+
+        <nz-divider *ngIf="textCode" nzDashed [nzText]="dividerTitle">
+          <ng-template #dividerTitle>
+            <div class="text-[18px] font-bold">
+              {{  metadata.url + ' - Meta / Og Tags' }}
+            </div>
+          </ng-template>
+        </nz-divider>
+
+        <div class="flex justify-center items-center my-10">
+          <app-html-code-snippet (codeCopied)="codeCopied()" *ngIf="textCode" [textCode]="textCode" ></app-html-code-snippet>
+        </div>
+      </div>
+    </nz-content>
+  </nz-layout>
+  <nz-footer class="flex justify-center items-center gap-4"><span>Meta Tag Generator @ Luis Ventura - 2024</span> <a href="https://github.com/luisvent/meta_tag_generator"><i class='transition hover:scale-125 cursor-pointer hover:text-neutral-600 text-2xl bx bxl-github' ></i></a></nz-footer>
+</nz-layout>
+
+<ng-template let-data="data" #notificationTemplate >
+  <nz-tag *ngIf="data.highlight" [nzColor]="data.highlight.color">{{ data.highlight.message }}</nz-tag>
+  {{data.message}}
+</ng-template>
