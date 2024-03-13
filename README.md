@@ -12,6 +12,7 @@ This is an Angular application that allows users to generate meta and Open Graph
 
 ## Features
 
+- Built with `Angular`, `TailwindCss`, `AntDesign`, `Prismjs`, and `Jest`
 - Generate meta tags, including `title`, `author`, `description`, `keywords`, and `language`
 - Generate OG tags for Facebook, including `og:type`, `og:title`, `og:site_name`, `og:description`, `og:image`, and `og:url`
 - Generate Twitter cards, including `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`, `twitter:domain`, and `twitter:url`
