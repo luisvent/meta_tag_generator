@@ -137,7 +137,6 @@ export class AppComponent implements OnInit{
 
   generateMetatags(): void {
     const metadata = this.utils.createMetadata(this.metadataForm.value);
-    console.log(metadata)
     this.metadata = metadata;
     let tags = this.utils.createHTMLTags(this.metadata);
     tags += this.utils.createFacebookTags(this.metadata);
