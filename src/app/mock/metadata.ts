@@ -12,5 +12,5 @@ export const mockMetadata: Metadata = {
   allowRobots: true,
   encoding: Encoding.UTF8,
   language: Language.English,
-  imgUrl: 'https://metatags.lv-apps.com/mtt_preview.webp'
+  imgUrl: 'https://metatags.lv-apps.com/assets/mtt_preview.webp'
 };
