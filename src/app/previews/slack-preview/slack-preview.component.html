@@ -7,7 +7,7 @@
       <span class="text-[#717274] text-[15px] overflow-hidden break-words" >{{metadata.url}}</span>
     </div>
     <span class="text-[#0576b9] ligatures font-bold text-[15px] break-words">{{metadata.title}}</span>
-    <span class="text-[#2c2d30] text-[15px] break-words">{{metadata.description}}</span>
-    <img class="preview-img max-w-[360px] h-[189px] bg-cover rounded" [src]="metadata.imgUrl"  [alt]="metadata.title" appImgFallback/>
+    <span class="text-[#2c2d30] text-[15px] break-words leading-none mb-1">{{metadata.description}}</span>
+    <img class="preview-img max-w-[360px] max-h-[177px] bg-cover rounded object-cover" [src]="metadata.imgUrl"  [alt]="metadata.title" appImgFallback/>
   </div>
 </div>

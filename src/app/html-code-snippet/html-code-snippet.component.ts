@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {highlight, languages, highlightElement} from 'prismjs';
 import {UtilsService} from "../services/utils.service";
 
@@ -9,10 +9,12 @@ import {UtilsService} from "../services/utils.service";
 })
 export class HtmlCodeSnippetComponent implements OnInit, OnChanges {
 
-
   @Input()
   textCode = ``;
   formattedCode = ``;
+
+  @Output()
+  codeCopied: EventEmitter<any> = new EventEmitter();
 
   constructor(private utils: UtilsService) {
 
@@ -40,5 +42,6 @@ export class HtmlCodeSnippetComponent implements OnInit, OnChanges {
 
   copyCode() {
     this.utils.copyToClipboard(this.textCode);
+    this.codeCopied.emit();
   }
 }

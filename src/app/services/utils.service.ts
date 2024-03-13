@@ -12,7 +12,7 @@ import { Language } from '../enums/language.enum';
 export class UtilsService {
   constructor(private http: HttpClient) { }
 
-  getWebsiteMetatags(url: string): Observable<APIMetatags> {
+  getWebsiteMetatags(url: string): Observable<{ message: string, status: string, data: APIMetatags }> {
     const METATAGS_API = 'https://api.lv-apps.com/metatags/metadata?url='
     return this.http.get(`${METATAGS_API}${url}`).pipe(result => result as any);
   }
@@ -22,13 +22,13 @@ export class UtilsService {
       title: values?.title || '',
       author: values?.author || '',
       url: values?.url? values.url.includes('https://')? values.url : `https://${values.url}` : '',
-      favUrl: values?.favUrl || '',
+      favUrl: values?.icon || values?.favUrl || '',
       description: values?.description || '',
       keywords: values?.keywords.length > 0? (values?.keywords as string).split(',').map(k => k.trim()): [],
       allowRobots: values?.allowRobots === 'Yes',
       encoding: values?.encoding || Encoding.UTF8,
       language: values?.language || Language.English,
-      imgUrl: values?.imgUrl? values.imgUrl.includes('https://')? values.imgUrl : `https://${values.imgUrl}` : '',
+      imgUrl: values?.image || (values?.imgUrl? values.imgUrl.includes('https://')? values.imgUrl : `https://${values.imgUrl}` : ''),
     };
   }
 
@@ -38,6 +38,10 @@ export class UtilsService {
 
     if(metadata.title.length > 0) {
       tags += `<meta name="title" content="${metadata.title}" />\n`;
+    }
+
+    if(metadata.author.length > 0) {
+      tags += `<meta name="author" content="${metadata.author}" />\n`;
     }
 
     if(metadata.description.length > 0) {

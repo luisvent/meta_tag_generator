@@ -1,29 +1,29 @@
 <nz-layout>
   <nz-layout>
     <nz-content class="">
-      <div class="flex flex-col my-20 gap-14">
+      <div class="flex flex-col items-center justify-center my-20">
 
         <div class="flex justify-center flex-col items-center">
           <nz-page-header nzTitle="Meta / OG Tags Generator"></nz-page-header>
           <nz-page-header-subtitle>Effortlessly Generate and preview Meta Tags for Optimal Web Visibility</nz-page-header-subtitle>
         </div>
-        <div class="flex justify-center items-center gap-10">
+        <div class="flex justify-center items-center gap-10 my-14">
           <div class="w-[400px]">
             <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
-              <input type="text" nz-input [(ngModel)]="inputUrl" />
+              <input #websiteInput type="text" nz-input [(ngModel)]="inputUrl" />
             </nz-input-group>
             <ng-template #addOnBeforeTemplate>
-              <nz-select [ngModel]="'https://'">
+              <nz-select [(ngModel)]="websiteProtocol">
                 <nz-option nzLabel="http://" nzValue="http://"></nz-option>
                 <nz-option nzLabel="https://" nzValue="https://"></nz-option>
               </nz-select>
             </ng-template>
           </div>
-          <button nz-button nzType="primary">Website Metatags</button>
-
+          <button nz-button (click)="getWebsiteMetatags()" [disabled]="websiteInput.value.length === 0" nzType="primary">Website Metatags</button>
         </div>
-        <div class="m-5 flex justify-center gap-10">
-          <div class="forms w-96">
+          <nz-spin @an *ngIf="loading" nzSimple [nzSize]="'large'"></nz-spin>
+        <div class="flex justify-center gap-10">
+          <div class="bg-white p-3 forms w-96">
             <nz-divider nzDashed [nzText]="formTitle">
               <ng-template #formTitle>
                 <div class="text-[18px] font-bold">
@@ -76,7 +76,7 @@
               <nz-form-item>
                 <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
                 <nz-form-control [nzSpan]="12" [nzMd]="24"  nzHasFeedback nzErrorTip="Description required">
-                  <nz-textarea-count [nzMaxCharacterCount]="2000">
+                  <nz-textarea-count [nzMaxCharacterCount]="200">
                     <textarea formControlName="description" nz-input rows="2" placeholder="Write webpage description..."></textarea>
                   </nz-textarea-count>
                 </nz-form-control>
@@ -109,7 +109,7 @@
 
             </form>
           </div>
-          <div class="previews">
+          <div class="bg-white p-3 previews">
             <nz-divider nzDashed [nzText]="previewTitle">
               <ng-template #previewTitle>
                 <div class="text-[18px]  font-bold">
@@ -149,26 +149,25 @@
             </div>
           </div>
         </div>
-        <div class="flex justify-center items-center mb-10">
-          <app-html-code-snippet *ngIf="textCode" [textCode]="textCode" ></app-html-code-snippet>
+
+        <nz-divider *ngIf="textCode" nzDashed [nzText]="dividerTitle">
+          <ng-template #dividerTitle>
+            <div class="text-[18px] font-bold">
+              {{  metadata.url + ' - Meta / Og Tags' }}
+            </div>
+          </ng-template>
+        </nz-divider>
+
+        <div class="flex justify-center items-center my-10">
+          <app-html-code-snippet (codeCopied)="codeCopied()" *ngIf="textCode" [textCode]="textCode" ></app-html-code-snippet>
         </div>
       </div>
     </nz-content>
   </nz-layout>
-  <nz-footer class="flex justify-center items-center gap-4"><span>Meta Tag Generator @ Luis Ventura - 2024</span> <i class='transition hover:scale-125 cursor-pointer hover:text-neutral-600 text-2xl bx bxl-github' ></i> </nz-footer>
+  <nz-footer class="flex justify-center items-center gap-4"><span>Meta Tag Generator @ Luis Ventura - 2024</span> <a href="https://github.com/luisvent/meta_tag_generator"><i class='transition hover:scale-125 cursor-pointer hover:text-neutral-600 text-2xl bx bxl-github' ></i></a></nz-footer>
 </nz-layout>
 
-<ng-template #template>
-  <div class="ant-notification-notice-content">
-    <div class="ant-notification-notice-with-icon">
-          <span class="ant-notification-notice-icon">
-            <span nz-icon nzType="smile" style="color: rgb(16, 142, 233);"></span>
-          </span>
-      <div class="ant-notification-notice-message">Notification Title</div>
-      <div class="ant-notification-notice-description">
-        This is the content of the notification. This is the content of the notification. This is the content of the
-        notification.
-      </div>
-    </div>
-  </div>
+<ng-template let-data="data" #notificationTemplate >
+  <nz-tag *ngIf="data.highlight" [nzColor]="data.highlight.color">{{ data.highlight.message }}</nz-tag>
+  {{data.message}}
 </ng-template>
