@@ -13,7 +13,23 @@ html, body {
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
+.dotted-bg {
+  --dot-bg: white;
+  --dot-color: #b5b5b5;
+  --dot-size: 1px;
+  --dot-space: 22px;
+
+  background:
+    linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+    linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+    var(--dot-color);
+}
+
 .ligatures {
   font-feature-settings: "liga", "clig";
   font-variant-ligatures: common-ligatures;
+}
+
+nz-layout {
+  background-color: transparent !important;
 }
