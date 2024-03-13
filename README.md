@@ -47,6 +47,8 @@ This project is licensed under the [MIT License](LICENSE).
 ## Acknowledgments
 
 - [Angular](https://angular.io/) - The web framework used for building this application.
+- [AntDesign](https://ng.ant.design/) - An enterprise-class Angular UI component library based on Ant Design, all components are open source and free to use under MIT license.
+- [BoxIcons](https://boxicons.com/) - Simple Open Source icons carefully crafted for designers & developers
 - [Meta Tags](https://developers.facebook.com/docs/sharing/webmasters/), [Open Graph](https://ogp.me/), and [Twitter Cards](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards) - The standards and guidelines followed for generating the meta and OG tags.
 
 
