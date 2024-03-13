@@ -29,7 +29,18 @@ import {NzNotificationService} from "ng-zorro-antd/notification";
 export class AppComponent implements OnInit{
 
   @ViewChild('notificationTemplate', { static: false }) notificationTemplate?: TemplateRef<{}>;
-  metadata: Metadata = mockMetadata;
+  metadata: Metadata = mockMetadata || {
+    title: '',
+    author: '',
+    url: '',
+    favUrl: '',
+    description: '',
+    keywords: [],
+    allowRobots: true,
+    encoding: Encoding.UTF8,
+    language: Language.English,
+    imgUrl: ''
+  };
   metadataForm: UntypedFormGroup;
   inputUrl = '';
   websiteProtocol = 'https://';
@@ -80,6 +91,7 @@ export class AppComponent implements OnInit{
     this.metadataForm = this.fb.group({
       title: ['', [Validators.required]],
       url: ['', []],
+      favUrl: ['', []],
       keywords: ['', []],
       imgUrl: ['', []],
       language: [Language.English, []],
@@ -97,6 +109,7 @@ export class AppComponent implements OnInit{
 
     this.metadataForm.controls['title'].setValue(metadata.title);
     this.metadataForm.controls['url'].setValue(metadata.url);
+    this.metadataForm.controls['favUrl'].setValue(metadata.favUrl);
     this.metadataForm.controls['keywords'].setValue(metadata.keywords.join(','));
     this.metadataForm.controls['imgUrl'].setValue(metadata.imgUrl);
     this.metadataForm.controls['language'].setValue(metadata.language);
@@ -110,9 +123,7 @@ export class AppComponent implements OnInit{
   getWebsiteMetatags() {
     if(this.inputUrl.length > 0) {
       this.loading = true;
-
       const completeUrl = this.inputUrl.includes(this.websiteProtocol)? this.inputUrl : `${this.websiteProtocol}${this.inputUrl}`;
-
       this.utils.getWebsiteMetatags(completeUrl).subscribe(response => {
         const metadata = this.utils.createMetadata(response.data);
         this.fillForm(metadata);
@@ -121,7 +132,6 @@ export class AppComponent implements OnInit{
         this.loading = false;
         this.warningNotification('URL not valid', 'Invalid')
       })
-
     }
   }
 
@@ -143,6 +153,25 @@ export class AppComponent implements OnInit{
     this.showNotification(message, {color: 'red', message: errorMessage});
   }
 
+  clearMetadata() {
+    this.metadata = {
+      title: '',
+      author: '',
+      url: '',
+      favUrl: '',
+      description: '',
+      keywords: [],
+      allowRobots: true,
+      encoding: Encoding.UTF8,
+      language: Language.English,
+      imgUrl: ''
+    };
+  }
+
+  resetForm() {
+    this.metadataForm.reset();
+    this.clearMetadata();
+  }
 
   warningNotification(message: string, warningMessage: string) {
     this.showNotification(message, {color: 'orange', message: warningMessage});

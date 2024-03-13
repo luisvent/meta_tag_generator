@@ -36,7 +36,6 @@ export class HtmlCodeSnippetComponent implements OnInit, OnChanges {
 
   formatCode(text: string) {
     const html = highlight(text, languages['html'], 'html');
-    console.log(html);
     return html;
   }
 

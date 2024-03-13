@@ -122,7 +122,7 @@ describe('UtilsService', () => {
     let url = 'http://slack.com';
 
     service.getWebsiteMetatags(url).subscribe(response => {
-      result = response;
+      result = response.data;
     })
     const req = httpTestingController.expectOne('https://api.lv-apps.com/metatags/metadata?url=' + url);
     req.flush(resultData);

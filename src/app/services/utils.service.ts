@@ -18,6 +18,7 @@ export class UtilsService {
   }
 
   createMetadata(values: any): Metadata {
+    console.log(values);
     return {
       title: values?.title || '',
       author: values?.author || '',
@@ -37,6 +38,7 @@ export class UtilsService {
     let tags = '<!-- HTML Meta Tags -->\n';
 
     if(metadata.title.length > 0) {
+      tags += `<title>${metadata.title}</title>\n`;
       tags += `<meta name="title" content="${metadata.title}" />\n`;
     }
 
@@ -112,8 +114,8 @@ export class UtilsService {
     if(metadata.url.length > 0) {
       const url = new URL(metadata.url);
 
-      tags += `<meta property="twitter:domain" content="${url.hostname}">\n`;
-      tags += `<meta property="twitter:url" content="${url.href}">`;
+      tags += `<meta name="twitter:domain" content="${url.hostname}">\n`;
+      tags += `<meta name="twitter:url" content="${url.href}">`;
     }
 
     return tags;
