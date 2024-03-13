@@ -1,27 +1,53 @@
-# MetaTagGenerator
+# Meta/OG Tags Generator
+
+<p align="center">
+  <img src="p1.webp" alt="Sublime's custom image"/>
+</p>
+
+This is an Angular application that allows users to generate meta and Open Graph (OG) tags for their webpages. These tags are essential for improving website visibility and search engine optimization (SEO), as well as enhancing the appearance of links shared on social media platforms.
+
+<p align="center">
+  <img src="p2.webp" alt="Sublime's custom image"/>
+</p>
+
+## Features
+
+- Generate meta tags, including `title`, `author`, `description`, `keywords`, and `language`
+- Generate OG tags for Facebook, including `og:type`, `og:title`, `og:site_name`, `og:description`, `og:image`, and `og:url`
+- Generate Twitter cards, including `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`, `twitter:domain`, and `twitter:url`
+- Live preview of how the webpage will appear on different platforms
+- Copy the generated HTML code for easy integration into your website
+
+## Getting Started
+
+To get started with the Meta/OG Tags Generator, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/your-username/meta-og-tags-generator.git`
+2. Install the required dependencies: `npm install`
+3. Start the development server: `npm run start`
+4. Open your web browser and navigate to `http://localhost:4200`
+
+## Usage
+
+1. Enter the URL of your website in the provided input field.
+2. Fill in the required fields for the meta tags, such as `Title`, `Author`, `Keywords`, `Description`, etc.
+3. Select the desired social media platforms for which you want to generate OG tags (e.g., Facebook, Twitter, LinkedIn).
+4. Click the "Generate Tags" button to generate the meta and OG tags.
+5. The generated HTML code will be displayed, which you can copy and paste into your website's HTML file.
+6. Use the live preview section to see how your webpage will appear on different platforms.
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- [Angular](https://angular.io/) - The web framework used for building this application.
+- [Meta Tags](https://developers.facebook.com/docs/sharing/webmasters/), [Open Graph](https://ogp.me/), and [Twitter Cards](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards) - The standards and guidelines followed for generating the meta and OG tags.
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.10.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
