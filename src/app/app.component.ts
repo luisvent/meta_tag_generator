@@ -170,6 +170,7 @@ export class AppComponent implements OnInit{
   resetForm() {
     this.metadataForm.reset();
     this.clearMetadata();
+    this.textCode = '';
   }
 
   warningNotification(message: string, warningMessage: string) {
