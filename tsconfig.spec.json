@@ -5,11 +5,11 @@
     "esModuleInterop": true,
     "outDir": "./out-tsc/spec",
     "types": [
-      "jest"
+      "jest", "node"
     ]
   },
   "include": [
-    "./setup.jest.ts",
+    "./setup-jest.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
   ]

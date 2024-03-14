@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {highlight, languages, highlightElement} from 'prismjs';
 import {UtilsService} from "../services/utils.service";
 
 @Component({
@@ -24,19 +23,13 @@ export class HtmlCodeSnippetComponent implements OnInit, OnChanges {
     this.init();
   }
 
-
   ngOnChanges(): void {
     this.init();
   }
 
   init() {
     this.formattedCode = '';
-    this.formattedCode = this.formatCode(this.textCode);
-  }
-
-  formatCode(text: string) {
-    const html = highlight(text, languages['html'], 'html');
-    return html;
+    this.formattedCode = this.utils.formatCode(this.textCode);
   }
 
   copyCode() {

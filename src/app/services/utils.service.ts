@@ -5,6 +5,7 @@ import {APIMetatags} from "../interfaces/api-metadata.interface";
 import {Metadata} from "../interfaces/metadata.interface";
 import { Encoding } from '../enums/content.enum';
 import { Language } from '../enums/language.enum';
+import {highlight, languages} from "prismjs";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,6 @@ export class UtilsService {
   }
 
   createMetadata(values: any): Metadata {
-    console.log(values);
     return {
       title: values?.title || '',
       author: values?.author || '',
@@ -121,6 +121,11 @@ export class UtilsService {
     return tags;
   }
 
+  formatCode(text: string) {
+    const html = highlight(text, languages['html'], 'html');
+    return html;
+  }
+
   copyToClipboard(text: string){
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
@@ -131,7 +136,8 @@ export class UtilsService {
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
-    document.execCommand('copy');
+    selBox.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(selBox.value);
     document.body.removeChild(selBox);
   }
 }

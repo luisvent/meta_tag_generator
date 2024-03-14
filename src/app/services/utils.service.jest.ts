@@ -36,13 +36,13 @@ describe('UtilsService', () => {
         title: 'Meta Tags / OG Generator - Create and Preview ',
         author: 'Luis Ventura',
         url: 'https://metatags.lv-apps.com',
-        favUrl: 'metatags.lv-apps.com/mtt_preview.webp',
+        favUrl: 'https://metatags.lv-apps.com/assets/favicon.ico',
         description: 'Generate the optimal Open Graph tags (OG tags) for your webpage.  See a live preview of how your webpage will look when shared on social media platforms like Facebook and Twitter.',
         keywords: 'meta, tags, metatags, og, facebook, twitter, html',
         allowRobots: 'Yes',
         encoding: Encoding.UTF8,
         language: Language.English,
-        imgUrl: 'metatags.lv-apps.com/mtt_preview.webp'
+        imgUrl: 'https://metatags.lv-apps.com/assets/mtt.png'
       };
       const processedMetadata = service.createMetadata(formData);
       expect(processedMetadata).toEqual(mockMetadata);
@@ -56,7 +56,9 @@ describe('UtilsService', () => {
 
       const tags = service.createHTMLTags(mockMetadata);
       expect(tags).toEqual(`<!-- HTML Meta Tags -->
+<title>Meta Tags / OG Generator - Create and Preview </title>
 <meta name="title" content="Meta Tags / OG Generator - Create and Preview " />
+<meta name="author" content="Luis Ventura" />
 <meta name="description" content="Generate the optimal Open Graph tags (OG tags) for your webpage.  See a live preview of how your webpage will look when shared on social media platforms like Facebook and Twitter." />
 <meta name="keywords" content="meta,tags,metatags,og,facebook,twitter,html" />
 <meta name="language" content="English" />
@@ -75,9 +77,9 @@ describe('UtilsService', () => {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Meta Tags / OG Generator - Create and Preview " />
 <meta name="twitter:description" content="Generate the optimal Open Graph tags (OG tags) for your webpage.  See a live preview of how your webpage will look when shared on social media platforms like Facebook and Twitter." />
-<meta name="twitter:image" content="https://metatags.lv-apps.com/mtt_preview.webp" />
-<meta property="twitter:domain" content="metatags.lv-apps.com">
-<meta property="twitter:url" content="https://metatags.lv-apps.com/">`);
+<meta name="twitter:image" content="https://metatags.lv-apps.com/assets/mtt.png" />
+<meta name="twitter:domain" content="metatags.lv-apps.com">
+<meta name="twitter:url" content="https://metatags.lv-apps.com/">`);
     })
 
   })
@@ -92,7 +94,7 @@ describe('UtilsService', () => {
 <meta property="og:title" content="Meta Tags / OG Generator - Create and Preview " />
 <meta property="og:site_name" content="Meta Tags / OG Generator - Create and Preview " />
 <meta property="og:description" content="Generate the optimal Open Graph tags (OG tags) for your webpage.  See a live preview of how your webpage will look when shared on social media platforms like Facebook and Twitter." />
-<meta property="og:image" content="https://metatags.lv-apps.com/mtt_preview.webp" />
+<meta property="og:image" content="https://metatags.lv-apps.com/assets/mtt.png" />
 <meta property="og:url" content="https://metatags.lv-apps.com">\n`);
     })
 
@@ -125,8 +127,32 @@ describe('UtilsService', () => {
       result = response.data;
     })
     const req = httpTestingController.expectOne('https://api.lv-apps.com/metatags/metadata?url=' + url);
-    req.flush(resultData);
+    req.flush({data: resultData});
 
     expect(result).toEqual(resultData);
+  })
+
+  it('should copy text', async () => {
+    const textToCopy = 'test';
+    const originalNavigator = { ...global.navigator };
+
+    Object.assign(window.navigator, {
+      clipboard: {
+        writeText: jest.fn()
+      },
+    });
+
+    service.copyToClipboard(textToCopy);
+
+    expect(navigator.clipboard.writeText).toBeCalledTimes(1);
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(textToCopy);
+
+    Object.assign(window.navigator, originalNavigator);
+  })
+
+  it('should format text', async () => {
+    const textTest = '<meta name="title" content="Testing tag">';
+    const textFormattedResult = `<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>meta</span> <span class=\"token attr-name\">name</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>title<span class=\"token punctuation\">\"</span></span> <span class=\"token attr-name\">content</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>Testing tag<span class=\"token punctuation\">\"</span></span><span class=\"token punctuation\">></span></span>`;
+    expect(service.formatCode(textTest)).toEqual(textFormattedResult);
   })
 });

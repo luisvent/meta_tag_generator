@@ -1,6 +1,7 @@
 <nz-card class="max-w-[900px]" nzTitle="Copy the HTML meta tags for your site" [nzExtra]="extraTemplate">
-  <pre><code [innerHtml]="formattedCode"></code></pre>
+  <pre><code data-testid="code-container" [innerHtml]="formattedCode"></code></pre>
 </nz-card>
 <ng-template #extraTemplate>
   <i (click)="copyCode()" class='cursor-pointer text-xl transition hover:text-blue-500 bx bx-copy' ></i>
 </ng-template>
+
