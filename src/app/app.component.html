@@ -4,11 +4,11 @@
       <div class="flex flex-col items-center justify-center my-20">
 
         <div class="flex justify-center flex-col items-center">
-          <h1 class="text-5xl font-bold my-4">Meta / OG Tags Generator</h1>
-          <nz-page-header-subtitle>Effortlessly Generate and preview Meta Tags for Optimal Web Visibility</nz-page-header-subtitle>
+          <h1 class="text-5xl font-bold my-4 text-center">Meta / OG Tags Generator</h1>
+          <nz-page-header-subtitle class="text-center w-3/4">Effortlessly Generate and preview Meta Tags for Optimal Web Visibility</nz-page-header-subtitle>
         </div>
-        <div class="flex justify-center items-center gap-10 my-14">
-          <div class="w-[400px]">
+        <div class="flex justify-center xl:flex-row flex-col items-center gap-10 my-14">
+          <div class="w-full xl:w-[400px]">
             <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
               <input (keydown.enter)="getWebsiteMetatags()" #websiteInput type="text" placeholder="ex: google.com" nz-input [(ngModel)]="inputUrl" />
             </nz-input-group>
@@ -22,7 +22,7 @@
           <button nz-button (click)="getWebsiteMetatags()" [disabled]="loading || websiteInput.value.length === 0" nzType="primary">Website Metatags</button>
         </div>
           <nz-spin @an *ngIf="loading" nzSimple [nzSize]="'large'"></nz-spin>
-        <div class="flex justify-center gap-10">
+        <div class="flex w-full flex-col xl:flex-row xl:w-[800px] justify-center items-center xl:items-start gap-10">
           <div class="bg-white p-3 forms w-96">
             <nz-divider nzDashed [nzText]="formTitle">
               <ng-template #formTitle>
@@ -108,7 +108,7 @@
 
             </form>
           </div>
-          <div class="bg-white p-3 previews">
+          <div class="bg-white p-3 previews w-full">
             <nz-divider nzDashed [nzText]="previewTitle">
               <ng-template #previewTitle>
                 <div class="text-[18px]  font-bold">
@@ -126,7 +126,7 @@
                   {{network.name}}
                 </ng-template>
 
-                <div class="flex justify-center items-center mt-10">
+                <div class="flex justify-center items-center mt-10 overflow-auto">
                   <ng-container [ngSwitch]="network.key">
                     <app-facebook-preview *ngSwitchCase="'facebook'" [metadata]="metadata"></app-facebook-preview>
                     <app-pinterest-preview *ngSwitchCase="'pinterest'" [metadata]="metadata" ></app-pinterest-preview>
