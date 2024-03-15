@@ -5,15 +5,26 @@ import {AntdModule} from "../ant.module";
 import {NzCardComponent} from "ng-zorro-antd/card";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {By} from "@angular/platform-browser";
+import {first} from "rxjs";
+import {UtilsService} from "../services/utils.service";
+import {mockTagsHTML} from "../mock/metadata";
 
 describe('HtmlCodeSnippetComponent', () => {
   let component: HtmlCodeSnippetComponent;
   let fixture: ComponentFixture<HtmlCodeSnippetComponent>;
+  let mockUtilsService = {
+    copyToClipboard: (text: string) => {
+    },
+    formatCode: (code: string) => {
+      return mockTagsHTML.formatted;
+  }
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ AntdModule, HttpClientTestingModule ],
-      declarations: [HtmlCodeSnippetComponent, NzCardComponent]
+      declarations: [HtmlCodeSnippetComponent, NzCardComponent],
+      providers: [{provide: UtilsService, useValue: mockUtilsService}]
     })
     .compileComponents();
 
@@ -27,21 +38,34 @@ describe('HtmlCodeSnippetComponent', () => {
   })
 
   it('should format code on init', () => {
-    component.textCode = '<meta name="title" content="Testing tag">';
+    component.textCode = mockTagsHTML.plain;
     fixture.detectChanges();
     component.init();
 
-    expect(component.formattedCode).toEqual(`<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>meta</span> <span class=\"token attr-name\">name</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>title<span class=\"token punctuation\">\"</span></span> <span class=\"token attr-name\">content</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>Testing tag<span class=\"token punctuation\">\"</span></span><span class=\"token punctuation\">></span></span>`);
+    expect(component.formattedCode).toEqual(mockTagsHTML.formatted);
   })
 
   it('should render formatted code', () => {
-    component.textCode = '<meta name="title" content="Testing tag">';
+    component.textCode = mockTagsHTML.plain;
     fixture.detectChanges();
     component.init();
     fixture.detectChanges();
 
     const codeContainer = fixture.debugElement.query(By.css('[data-testid="code-container"]'));
 
-    expect(codeContainer.nativeElement.innerHTML).toEqual(`<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>meta</span> <span class=\"token attr-name\">name</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>title<span class=\"token punctuation\">\"</span></span> <span class=\"token attr-name\">content</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>Testing tag<span class=\"token punctuation\">\"</span></span><span class=\"token punctuation\">&gt;</span></span>`);
+    expect(codeContainer.nativeElement.innerHTML).toEqual(mockTagsHTML.rendered);
+  })
+
+  it('should emit copy event on copy icon click', () => {
+
+    const copyIconElement = fixture.debugElement.query(By.css('[data-testid="copy-icon"]'));
+    let emitted = false;
+
+    component.codeCopied.pipe(first()).subscribe(data => {
+      emitted = true;
+    })
+
+    copyIconElement.triggerEventHandler('click');
+    expect(emitted).toBeTruthy();
   })
 });

@@ -14,3 +14,9 @@ export const mockMetadata: Metadata = {
   language: Language.English,
   imgUrl: 'https://metatags.lv-apps.com/assets/mtt.png'
 };
+
+export const mockTagsHTML = {
+  plain: '<meta name="title" content="Testing tag">',
+  formatted: '<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>meta</span> <span class=\"token attr-name\">name</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>title<span class=\"token punctuation\">\"</span></span> <span class=\"token attr-name\">content</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>Testing tag<span class=\"token punctuation\">\"</span></span><span class=\"token punctuation\">></span></span>',
+  rendered: `<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>meta</span> <span class=\"token attr-name\">name</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>title<span class=\"token punctuation\">\"</span></span> <span class=\"token attr-name\">content</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>Testing tag<span class=\"token punctuation\">\"</span></span><span class=\"token punctuation\">&gt;</span></span>`
+}

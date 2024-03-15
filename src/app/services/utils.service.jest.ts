@@ -2,7 +2,7 @@
 import { UtilsService } from './utils.service';
 import {TestBed} from "@angular/core/testing";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {mockMetadata} from "../mock/metadata";
+import {mockMetadata, mockTagsHTML} from "../mock/metadata";
 import {Encoding} from "../enums/content.enum";
 import {Language} from "../enums/language.enum";
 import {APIMetatags} from "../interfaces/api-metadata.interface";
@@ -151,8 +151,8 @@ describe('UtilsService', () => {
   })
 
   it('should format text', async () => {
-    const textTest = '<meta name="title" content="Testing tag">';
-    const textFormattedResult = `<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>meta</span> <span class=\"token attr-name\">name</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>title<span class=\"token punctuation\">\"</span></span> <span class=\"token attr-name\">content</span><span class=\"token attr-value\"><span class=\"token punctuation attr-equals\">=</span><span class=\"token punctuation\">\"</span>Testing tag<span class=\"token punctuation\">\"</span></span><span class=\"token punctuation\">></span></span>`;
+    const textTest = mockTagsHTML.plain;
+    const textFormattedResult = mockTagsHTML.formatted;
     expect(service.formatCode(textTest)).toEqual(textFormattedResult);
   })
 });

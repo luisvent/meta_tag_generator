@@ -19,7 +19,7 @@
               </nz-select>
             </ng-template>
           </div>
-          <button nz-button (click)="getWebsiteMetatags()" [disabled]="loading || websiteInput.value.length === 0" nzType="primary">Website Metatags</button>
+          <button data-testid="generate-btn" nz-button (click)="getWebsiteMetatags()" [disabled]="loading || websiteInput.value.length === 0" nzType="primary">Website Metatags</button>
         </div>
           <nz-spin @an *ngIf="loading" nzSimple [nzSize]="'large'"></nz-spin>
         <div class="flex w-full flex-col xl:flex-row xl:w-[800px] justify-center items-center xl:items-start gap-10">
